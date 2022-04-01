@@ -1,8 +1,8 @@
 # Lobster Challenge
 
-![Charles and his lobster](lobster.jpg "Charles and his lobster")
+![Charles and his Super lobster](lobster.jpg "Charles and his lobster")
 
-Charles has a lobster, but the poor creature does not yet have a name.
+Charles has a Super lobster, but the poor creature does not yet have a name.
 Let's use a simple Plutus Smart Contract on Cardano to help Charles find a name for his lobster!
 
 We start with a [list of names](names.md) and a "secret random" number, which we will only reveal in the end.
