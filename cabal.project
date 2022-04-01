@@ -23,12 +23,12 @@ source-repository-package
   tag: f6293f3fafd7f494891baa584245c7ebc95d2d62
   subdir:
     cardano-api
-
-source-repository-package
-  type: git
-  location: https://github.com/input-output-hk/hedgehog-extras
-  tag: edf6945007177a638fbeb8802397f3a6f4e47c14
-
+-- 
+-- source-repository-package
+--   type: git
+--   location: https://github.com/input-output-hk/hedgehog-extras
+--   tag: edf6945007177a638fbeb8802397f3a6f4e47c14
+-- 
 source-repository-package
   type: git
   location: https://github.com/input-output-hk/cardano-base
@@ -134,6 +134,13 @@ source-repository-package
     plutus-tx-plugin
     prettyprinter-configurable
     word-array
+
+source-repository-package
+  type: git
+  location: https://github.com/superfluid-finance/protocol-monorepo
+  tag: afe6871ecb2c5079b7dda65db548f3d03018c4a8
+  subdir:
+    packages/spec-haskell/packages/core
 
 source-repository-package
   type: git

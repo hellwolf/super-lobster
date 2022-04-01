@@ -1,19 +1,19 @@
-{-# LANGUAGE DataKinds #-}
-{-# LANGUAGE DeriveAnyClass #-}
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE DeriveAnyClass        #-}
+{-# LANGUAGE DeriveGeneric         #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE NamedFieldPuns #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE TypeApplications #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE TypeOperators #-}
+{-# LANGUAGE NamedFieldPuns        #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE ScopedTypeVariables   #-}
+{-# LANGUAGE TemplateHaskell       #-}
+{-# LANGUAGE TypeApplications      #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE TypeOperators         #-}
 
-module Cardano.PlutusLobster.LobsterScript
+module Cardano.SuperLobster.LobsterScript
   ( apiNFTMintScript
   , apiOtherMintScript
   , apiLobsterScript
@@ -23,18 +23,22 @@ module Cardano.PlutusLobster.LobsterScript
   , votesTokenName
   ) where
 
-import           Cardano.Api.Shelley      (PlutusScript (..), PlutusScriptV1)
+import           Cardano.Api.Shelley                 (PlutusScript (..),
+                                                      PlutusScriptV1)
 import           Codec.Serialise
-import qualified Data.ByteString.Lazy     as LB
-import qualified Data.ByteString.Short    as SBS
-import           Ledger                   hiding (singleton)
-import qualified Ledger.Typed.Scripts     as Scripts
-import           Ledger.Value             as Value
+import qualified Data.ByteString.Lazy                as LB
+import qualified Data.ByteString.Short               as SBS
+import           Ledger                              hiding (singleton)
+import qualified Ledger.Typed.Scripts                as Scripts
+import           Ledger.Value                        as Value
+import qualified Plutus.V1.Ledger.Scripts            as Plutus
 import qualified PlutusTx
-import           PlutusTx.Builtins        (modInteger)
-import           PlutusTx.Prelude         hiding (Semigroup (..), unless)
-import qualified Plutus.V1.Ledger.Scripts as Plutus
-import           Prelude                  (Show)
+import           PlutusTx.Builtins                   (modInteger)
+import           PlutusTx.Prelude                    hiding (Semigroup (..),
+                                                      unless)
+import           Prelude                             (Show)
+
+import           Money.Superfluid.Concepts.Liquidity (Liquidity)
 
 data LobsterParams = LobsterParams
     { lpSeed      :: Integer

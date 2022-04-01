@@ -8,7 +8,7 @@ import           Data.Foldable        (toList)
 import           System.IO
 import           Text.Printf          (printf)
 
-import           Paths_plutus_lobster (getDataFileName)
+import           Paths_super_lobster  (getDataFileName)
 
 main :: IO ()
 main = do

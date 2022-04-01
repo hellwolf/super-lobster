@@ -1,89 +1,87 @@
-cabal-version: 2.4
+cabal-version:      2.4
+name:               super-lobster
+version:            1.0.0
+license:            Apache-2.0
+license-file:       LICENSE
+maintainer:         miao@decentral.ee
+author:             ZC Miao
+description:        Super Lobster.
+build-type:         Simple
+data-files:         ENGivenMale.json
+extra-source-files: README.md
 
-name:                   plutus-lobster
-version:                1.0.0
-description:            Lobster naming.
-author:                 Lars Brünjes
-maintainer:             lars.bruenjes@iohk.io
-license:                Apache-2.0
-license-file:           LICENSE
-build-type:             Simple
-data-files:             ENGivenMale.json
-extra-source-files:     README.md
-
-Flag unexpected_thunks
-  Description:   Turn on unexpected thunks checks
-  Default:       False
-
-common base
-  build-depends: base >= 4.14 && < 4.15
-
-common project-config
-  default-language:     Haskell2010
-
-  default-extensions:   NoImplicitPrelude
-                        OverloadedStrings
-
-  ghc-options:          -Wall
-                        -Wcompat
-                        -Wincomplete-record-updates
-                        -Wincomplete-uni-patterns
-                        -Wpartial-fields
-                        -Wredundant-constraints
-                        -Wunused-packages
-
-common maybe-Win32
-  if os(windows)
-     build-depends:    Win32
+flag unexpected_thunks
+    description: Turn on unexpected thunks checks
+    default:     False
 
 library
-  import:               base, project-config
-                      , maybe-Win32
+    exposed-modules:    Cardano.SuperLobster.LobsterScript
+    hs-source-dirs:     src
+    default-language:   Haskell2010
+    default-extensions: NoImplicitPrelude OverloadedStrings
+    ghc-options:
+        -Wall -Wcompat -Wincomplete-record-updates
+        -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints
+        -Wunused-packages -fobject-code -fno-ignore-interface-pragmas
+        -fno-omit-interface-pragmas
 
-  if flag(unexpected_thunks)
-    cpp-options: -DUNEXPECTED_THUNKS
+    build-depends:
+        base >=4.14 && <4.15,
+        bytestring,
+        cardano-api,
+        plutus-core,
+        plutus-ledger,
+        plutus-ledger-api,
+        plutus-tx,
+        plutus-tx-plugin,
+        serialise,
+        superfluid-protocol-spec-core
 
-  hs-source-dirs:       src
+    if os(windows)
+        build-depends: Win32
 
-  exposed-modules:      Cardano.PlutusLobster.LobsterScript
+    if flag(unexpected_thunks)
+        cpp-options: -DUNEXPECTED_THUNKS
 
-  build-depends:        bytestring
-                      , cardano-api
-                      , plutus-core
-                      , plutus-ledger
-                      , plutus-ledger-api
-                      , plutus-tx
-                      , plutus-tx-plugin
-                      , serialise
+executable super-lobster-tokens
+    main-is:            super-lobster-tokens.hs
+    hs-source-dirs:     app
+    default-language:   Haskell2010
+    default-extensions: NoImplicitPrelude OverloadedStrings
+    ghc-options:
+        -Wall -Wcompat -Wincomplete-record-updates
+        -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints
+        -Wunused-packages -threaded -rtsopts -with-rtsopts=-T
 
-  ghc-options: -fobject-code -fno-ignore-interface-pragmas -fno-omit-interface-pragmas
+    build-depends:
+        base >=4.14 && <4.15,
+        cardano-api,
+        plutus-ledger,
+        super-lobster
 
-executable plutus-lobster-tokens
-  import:               base, project-config
-  hs-source-dirs:       app
-  main-is:              plutus-lobster-tokens.hs
-  ghc-options:          -threaded -rtsopts "-with-rtsopts=-T"
-  build-depends:        cardano-api
-                      , plutus-ledger
-                      , plutus-lobster
+executable super-lobster
+    main-is:            super-lobster.hs
+    hs-source-dirs:     app
+    default-language:   Haskell2010
+    default-extensions: NoImplicitPrelude OverloadedStrings
+    ghc-options:
+        -Wall -Wcompat -Wincomplete-record-updates
+        -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints
+        -Wunused-packages -threaded -rtsopts -with-rtsopts=-T
 
-executable plutus-lobster
-  import:               base, project-config
-  hs-source-dirs:       app
-  main-is:              plutus-lobster.hs
-  ghc-options:          -threaded -rtsopts "-with-rtsopts=-T"
+    build-depends:
+        base >=4.14 && <4.15,
+        cardano-api,
+        plutus-ledger,
+        super-lobster
 
-  build-depends:        cardano-api
-                      , plutus-ledger
-                      , plutus-lobster
-
-executable plutus-lobster-names
-  hs-source-dirs:       app
-  main-is:              plutus-lobster-names.hs
-  other-modules:        Paths_plutus_lobster
-  autogen-modules:      Paths_plutus_lobster
-  ghc-options:          -Wall
-
-  build-depends:        aeson
-                      , base
-                      , bytestring
+executable super-lobster-names
+    main-is:         super-lobster-names.hs
+    hs-source-dirs:  app
+    other-modules:   Paths_super_lobster
+    autogen-modules: Paths_super_lobster
+    ghc-options:     -Wall
+    build-depends:
+        aeson,
+        base,
+        bytestring
